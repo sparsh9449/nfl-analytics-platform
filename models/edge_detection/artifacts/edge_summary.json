@@ -1,0 +1,58 @@
+{
+  "seasons": [
+    2024,
+    2025
+  ],
+  "n_games": 570,
+  "model": "xgboost",
+  "overall": {
+    "mean_edge": -0.0196,
+    "std_edge": 0.2183,
+    "pct_pos_edge_5": 0.3684,
+    "pct_neg_edge_5": 0.4316,
+    "pos_edge_actual_win_rate": 0.4952,
+    "neg_edge_actual_win_rate": 0.4919
+  },
+  "buckets": [
+    {
+      "bucket": "< -10%",
+      "count": 210,
+      "market_wp_mean": 0.7265,
+      "model_wp_mean": 0.4845,
+      "actual_win_rate": 0.4952,
+      "edge_mean": -0.242
+    },
+    {
+      "bucket": "-10% to -5%",
+      "count": 36,
+      "market_wp_mean": 0.629,
+      "model_wp_mean": 0.5533,
+      "actual_win_rate": 0.4722,
+      "edge_mean": -0.0757
+    },
+    {
+      "bucket": "-5% to +5%",
+      "count": 114,
+      "market_wp_mean": 0.5336,
+      "model_wp_mean": 0.5292,
+      "actual_win_rate": 0.5,
+      "edge_mean": -0.0044
+    },
+    {
+      "bucket": "+5% to +10%",
+      "count": 36,
+      "market_wp_mean": 0.4379,
+      "model_wp_mean": 0.5123,
+      "actual_win_rate": 0.3889,
+      "edge_mean": 0.0744
+    },
+    {
+      "bucket": "> +10%",
+      "count": 174,
+      "market_wp_mean": 0.329,
+      "model_wp_mean": 0.56,
+      "actual_win_rate": 0.5172,
+      "edge_mean": 0.231
+    }
+  ]
+}
