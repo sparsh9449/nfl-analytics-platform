@@ -45,6 +45,10 @@ GAME_STATE_COLS = [
     "ydstogo",
     "posteam_timeouts_remaining",
     "defteam_timeouts_remaining",
+    # Betting market data — game-level constants repeated on every play
+    "spread_line",   # home_team spread (negative = home favored)
+    "total_line",    # over/under total
+    "vegas_wp",      # nflfastR market-implied WP for the home team, per play
 ]
 
 # Needed temporarily to build rolling stats and the win label; dropped at the end
