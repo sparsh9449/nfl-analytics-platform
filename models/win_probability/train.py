@@ -23,7 +23,6 @@ import xgboost as xgb
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import roc_auc_score, brier_score_loss
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
@@ -31,6 +30,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from models.win_probability.data_prep import load_and_split, FEATURES
+from models.win_probability.evaluate import compute_metrics
 
 ARTIFACTS = ROOT / "models" / "win_probability" / "artifacts"
 ARTIFACTS.mkdir(exist_ok=True)
@@ -57,14 +57,12 @@ def drop_ties(X, y):
 
 def val_metrics(model, X_val, y_val, name: str) -> dict:
     """
-    Compute ROC-AUC and Brier score on a held-out split.
-    Returns a dict so the caller can accumulate results for the summary.
+    One-line ROC-AUC + Brier score for quick feedback during the training loop.
+    Full evaluation (+ calibration table and plot) lives in evaluate.py.
     """
-    prob  = model.predict_proba(X_val)[:, 1]
-    auc   = roc_auc_score(y_val, prob)
-    brier = brier_score_loss(y_val, prob)
-    print(f"  {name:<35}  ROC-AUC={auc:.4f}  Brier={brier:.4f}")
-    return {"roc_auc": round(auc, 4), "brier": round(brier, 4)}
+    metrics = compute_metrics(model.predict_proba(X_val)[:, 1], y_val.to_numpy())
+    print(f"  {name:<35}  ROC-AUC={metrics['roc_auc']:.4f}  Brier={metrics['brier']:.4f}")
+    return metrics
 
 
 # ---------------------------------------------------------------------------
