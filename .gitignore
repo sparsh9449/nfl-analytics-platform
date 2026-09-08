@@ -216,3 +216,16 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# NFL Analytics — generated data files (recreate by running the pipeline)
+*.parquet
+data/quality_log/
+
+# NFL Analytics — trained model binary artifacts (too large to track)
+models/win_probability/artifacts/*.pkl
+models/win_probability/artifacts/*.joblib
+models/win_probability/artifacts/*.bin
+models/win_probability/artifacts/*.ubj
+# Keep the metrics summary so results are visible without re-running training
+!models/win_probability/artifacts/metrics_summary.json
+!models/win_probability/artifacts/metrics_summary.md
