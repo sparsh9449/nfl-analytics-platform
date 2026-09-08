@@ -92,8 +92,9 @@ def _rolling_team_stats(game_scores: pd.DataFrame) -> pd.DataFrame:
     points scored and allowed, using only games that came *before* the
     current one (shift(1) on the sorted sequence).
 
-    Sorting is by (team, season, week) so the window spans seasons — a
-    team's week-1 average legitimately includes their prior-season tail.
+    Grouping by (team, season) means the window resets at the start of each
+    season, so week-1 rolling stats are always NaN (no prior games that year).
+    Weeks 2-4 use 1-3 games; week 5+ uses the full ROLL_N-game window.
     """
     # One row per team per game from the home perspective
     home = game_scores[["game_id", "season", "week", "home_team", "home_final", "away_final"]].rename(
@@ -114,7 +115,7 @@ def _rolling_team_stats(game_scores: pd.DataFrame) -> pd.DataFrame:
                                ("pts_allowed", f"roll{ROLL_N}_pts_allowed")]:
         team_games[roll_col] = (
             team_games
-            .groupby("team")[raw_col]
+            .groupby(["team", "season"])[raw_col]
             .transform(lambda s: s.shift(1).rolling(ROLL_N, min_periods=1).mean())
         )
 
@@ -149,20 +150,34 @@ def _join_rolling_stats(df: pd.DataFrame, team_stats: pd.DataFrame) -> pd.DataFr
 def _add_posteam_win(df: pd.DataFrame) -> pd.DataFrame:
     """
     Compute a binary win label for the possession team.
-    `result` = home_final - away_final (nflfastR convention).
+    `result` = home_final - away_final (nflfastR convention, int32, no nulls).
     Ties are assigned 0.5 so the label can be used for regression or
     rounded to 0/1 for binary classification.
+    Plays with no possession team (e.g. kickoffs) get NaN.
     """
     if "result" not in df.columns:
         print("  warning: 'result' column not found — posteam_win not computed")
         return df
 
-    home_mask     = df["posteam"] == df["home_team"]
-    posteam_margin = np.where(home_mask, df["result"], -df["result"])
-    df["posteam_win"] = np.where(
-        posteam_margin > 0, 1.0,
-        np.where(posteam_margin < 0, 0.0, 0.5),
-    )
+    # Cast to float64 explicitly: parquet round-trips or multi-season concat can
+    # silently change int32 to pandas Int32 (nullable), which makes np.where
+    # output NaN wherever the nullable mask has <NA>.
+    result_f = df["result"].astype("float64")
+
+    home_mask = (df["posteam"] == df["home_team"]).to_numpy()
+    posteam_margin = np.where(home_mask, result_f.to_numpy(), -result_f.to_numpy())
+
+    win = np.where(posteam_margin > 0, 1.0, np.where(posteam_margin < 0, 0.0, 0.5))
+    df["posteam_win"] = win
+
+    # Plays without a possession team are not real scrimmage plays; null their label.
+    df.loc[df["posteam"].isna(), "posteam_win"] = np.nan
+
+    null_count = df["posteam_win"].isna().sum()
+    print(f"    posteam_win: {(df['posteam_win'] == 1.0).sum():,} wins, "
+          f"{(df['posteam_win'] == 0.0).sum():,} losses, "
+          f"{(df['posteam_win'] == 0.5).sum():,} ties, "
+          f"{null_count:,} nulls (no-possession plays)")
     return df
 
 
