@@ -1,0 +1,8 @@
+{
+  "logistic_regression": {
+    "val_2023": {
+      "roc_auc": 0.8359,
+      "brier": 0.1664
+    }
+  }
+}
