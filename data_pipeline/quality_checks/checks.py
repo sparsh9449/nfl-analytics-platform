@@ -13,6 +13,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -103,7 +104,7 @@ def run_validity_check(df: pd.DataFrame, season: int) -> CheckResult:
         # score_differential = posteam_score - defteam_score
         # when posteam is home: expected = total_home - total_away, and vice-versa
         home_mask = df["posteam"] == df["home_team"]
-        expected = pd.Series(pd.NA, index=df.index, dtype="float64")
+        expected = pd.Series(np.nan, index=df.index, dtype="float64")
         expected[home_mask]  = df.loc[home_mask,  "total_home_score"] - df.loc[home_mask,  "total_away_score"]
         expected[~home_mask] = df.loc[~home_mask, "total_away_score"] - df.loc[~home_mask, "total_home_score"]
         bad |= df["score_differential"].notna() & expected.notna() & (df["score_differential"] != expected)
