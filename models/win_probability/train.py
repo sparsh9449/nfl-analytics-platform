@@ -19,6 +19,7 @@ from pathlib import Path
 
 import joblib
 import numpy as np
+import xgboost as xgb
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.linear_model import LogisticRegression
@@ -104,6 +105,52 @@ def train_logistic_regression(X_train, y_train) -> Pipeline:
 
 
 # ---------------------------------------------------------------------------
+# Model 2 — XGBoost
+# ---------------------------------------------------------------------------
+
+def train_xgboost(X_train, y_train) -> xgb.XGBClassifier:
+    """
+    Gradient-boosted trees via XGBoost.
+
+    No preprocessing pipeline is needed:
+      - Trees are scale-invariant, so StandardScaler adds no value.
+      - XGBoost handles missing values natively by learning the best
+        direction to send null-feature rows at each split — so the week-1
+        null rolling stats need no imputation.
+      - 'down' is passed as numeric 1-4; trees find the right thresholds
+        without one-hot encoding.
+
+    Early stopping: we hold out the last 10% of training plays (still within
+    train seasons, no val/test leakage) as an internal eval set.  XGBoost
+    stops adding trees once logloss on that set hasn't improved for 30 rounds,
+    preventing the model from memorising the training data.
+    """
+    # Chronological 90/10 split within the training data for early stopping.
+    # iloc preserves time order because data_prep returns plays sorted by season.
+    split_at = int(len(X_train) * 0.9)
+    X_tr, X_es = X_train.iloc[:split_at], X_train.iloc[split_at:]
+    y_tr, y_es = y_train.iloc[:split_at], y_train.iloc[split_at:]
+
+    model = xgb.XGBClassifier(
+        n_estimators=1000,           # upper bound; early stopping cuts this short
+        learning_rate=0.05,
+        max_depth=5,
+        subsample=0.8,
+        colsample_bytree=0.8,
+        min_child_weight=10,         # require ≥10 plays in each leaf
+        tree_method="hist",
+        eval_metric="logloss",
+        early_stopping_rounds=30,
+        random_state=42,
+        verbosity=0,
+    )
+    model.fit(X_tr, y_tr, eval_set=[(X_es, y_es)], verbose=False)
+    print(f"  best iteration: {model.best_iteration}  "
+          f"(stopped before {model.n_estimators})")
+    return model
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 
@@ -129,17 +176,38 @@ if __name__ == "__main__":
     # -------------------------------------------------------------------------
     # 1. Logistic Regression
     # -------------------------------------------------------------------------
-    print("\n[1/1] Logistic Regression baseline")
+    print("\n[1/2] Logistic Regression baseline")
     lr = train_logistic_regression(X_train, y_train)
     all_metrics["logistic_regression"] = {
         "val_2023": val_metrics(lr, X_val, y_val, "Logistic Regression  val (2023)"),
     }
-
     joblib.dump(lr, ARTIFACTS / "lr_model.pkl")
     print(f"  saved -> artifacts/lr_model.pkl")
+
+    # -------------------------------------------------------------------------
+    # 2. XGBoost
+    # -------------------------------------------------------------------------
+    print("\n[2/2] XGBoost")
+    xgb_model = train_xgboost(X_train, y_train)
+    all_metrics["xgboost"] = {
+        "val_2023": val_metrics(xgb_model, X_val, y_val, "XGBoost              val (2023)"),
+    }
+    joblib.dump(xgb_model, ARTIFACTS / "xgb_model.pkl")
+    print(f"  saved -> artifacts/xgb_model.pkl")
+
+    # -------------------------------------------------------------------------
+    # Summary
+    # -------------------------------------------------------------------------
+    print("\n" + "=" * 60)
+    print("Validation summary (2023)")
+    print("=" * 60)
+    print(f"{'Model':<25} {'ROC-AUC':>9} {'Brier':>8}")
+    print("-" * 45)
+    for model_name, results in all_metrics.items():
+        m = results["val_2023"]
+        print(f"{model_name:<25} {m['roc_auc']:>9.4f} {m['brier']:>8.4f}")
 
     # Persist metrics so results survive without re-running training
     summary_path = ARTIFACTS / "metrics_summary.json"
     summary_path.write_text(json.dumps(all_metrics, indent=2))
     print(f"\nMetrics saved -> artifacts/metrics_summary.json")
-    print(json.dumps(all_metrics, indent=2))
