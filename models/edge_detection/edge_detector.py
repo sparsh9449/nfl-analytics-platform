@@ -33,9 +33,13 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from models.win_probability.data_prep import FEATURES
+from models.win_probability.calibrate import IsotonicCalibratedXGB  # noqa: F401 — needed for joblib deserialization
 
 GOLD_PATH = ROOT / "data" / "gold" / "wp_features.parquet"
-XGB_PATH  = ROOT / "models" / "win_probability" / "artifacts" / "xgb_model.pkl"
+# Default to calibrated model; fall back to raw if calibrated artifact is missing
+_CAL_PATH = ROOT / "models" / "win_probability" / "artifacts" / "xgb_calibrated.pkl"
+_RAW_PATH = ROOT / "models" / "win_probability" / "artifacts" / "xgb_model.pkl"
+XGB_PATH  = _CAL_PATH if _CAL_PATH.exists() else _RAW_PATH
 ARTIFACTS = ROOT / "models" / "edge_detection" / "artifacts"
 
 # Five symmetric buckets around zero; "near-fair" is the [-5%, +5%] center band
@@ -171,7 +175,7 @@ def _plot(summary: list[dict]) -> None:
 
     ax.set_xlabel("Edge bucket  (model WP − market WP)")
     ax.set_ylabel("Win rate")
-    ax.set_title("Pre-game Edge Backtest — XGBoost vs Market (2024–2025 test seasons)")
+    ax.set_title("Pre-game Edge Backtest — XGBoost (calibrated) vs Market (2024–2025)")
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=9)
     ax.axhline(0.5, color="gray", linestyle="--", linewidth=0.8, alpha=0.6)
