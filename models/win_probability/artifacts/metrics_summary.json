@@ -225,6 +225,62 @@
           "diff": 0.034
         }
       ]
+    },
+    "test_2024_2025_calibrated": {
+      "roc_auc": 0.8457,
+      "brier": 0.1602,
+      "calibration": [
+        {
+          "predicted": 0.04,
+          "actual": 0.042,
+          "diff": 0.002
+        },
+        {
+          "predicted": 0.153,
+          "actual": 0.136,
+          "diff": -0.017
+        },
+        {
+          "predicted": 0.243,
+          "actual": 0.223,
+          "diff": -0.019
+        },
+        {
+          "predicted": 0.359,
+          "actual": 0.347,
+          "diff": -0.011
+        },
+        {
+          "predicted": 0.437,
+          "actual": 0.444,
+          "diff": 0.007
+        },
+        {
+          "predicted": 0.563,
+          "actual": 0.579,
+          "diff": 0.016
+        },
+        {
+          "predicted": 0.642,
+          "actual": 0.62,
+          "diff": -0.022
+        },
+        {
+          "predicted": 0.73,
+          "actual": 0.728,
+          "diff": -0.002
+        },
+        {
+          "predicted": 0.843,
+          "actual": 0.873,
+          "diff": 0.03
+        },
+        {
+          "predicted": 0.97,
+          "actual": 0.968,
+          "diff": -0.002
+        }
+      ]
     }
   }
 }
