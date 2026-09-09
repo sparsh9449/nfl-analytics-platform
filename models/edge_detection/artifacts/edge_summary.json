@@ -6,53 +6,53 @@
   "n_games": 570,
   "model": "xgboost",
   "overall": {
-    "mean_edge": -0.0246,
-    "std_edge": 0.2208,
-    "pct_pos_edge_5": 0.3632,
-    "pct_neg_edge_5": 0.4474,
-    "pos_edge_actual_win_rate": 0.4928,
-    "neg_edge_actual_win_rate": 0.5059
+    "mean_edge": 0.016,
+    "std_edge": 0.1582,
+    "pct_pos_edge_5": 0.4158,
+    "pct_neg_edge_5": 0.3632,
+    "pos_edge_actual_win_rate": 0.3038,
+    "neg_edge_actual_win_rate": 0.6957
   },
   "buckets": [
     {
       "bucket": "< -10%",
-      "count": 215,
-      "market_wp_mean": 0.7231,
-      "model_wp_mean": 0.4756,
-      "actual_win_rate": 0.4884,
-      "edge_mean": -0.2474
+      "count": 162,
+      "market_wp_mean": 0.6996,
+      "model_wp_mean": 0.524,
+      "actual_win_rate": 0.7099,
+      "edge_mean": -0.1756
     },
     {
       "bucket": "-10% to -5%",
-      "count": 40,
-      "market_wp_mean": 0.5987,
-      "model_wp_mean": 0.524,
-      "actual_win_rate": 0.6,
-      "edge_mean": -0.0747
+      "count": 45,
+      "market_wp_mean": 0.6205,
+      "model_wp_mean": 0.5465,
+      "actual_win_rate": 0.6444,
+      "edge_mean": -0.074
     },
     {
       "bucket": "-5% to +5%",
-      "count": 108,
-      "market_wp_mean": 0.5328,
-      "model_wp_mean": 0.5319,
-      "actual_win_rate": 0.4722,
-      "edge_mean": -0.001
+      "count": 126,
+      "market_wp_mean": 0.5379,
+      "model_wp_mean": 0.5363,
+      "actual_win_rate": 0.5238,
+      "edge_mean": -0.0016
     },
     {
       "bucket": "+5% to +10%",
-      "count": 43,
-      "market_wp_mean": 0.4355,
-      "model_wp_mean": 0.5064,
-      "actual_win_rate": 0.4419,
-      "edge_mean": 0.0709
+      "count": 46,
+      "market_wp_mean": 0.4395,
+      "model_wp_mean": 0.5142,
+      "actual_win_rate": 0.3913,
+      "edge_mean": 0.0747
     },
     {
       "bucket": "> +10%",
-      "count": 164,
-      "market_wp_mean": 0.3254,
-      "model_wp_mean": 0.5645,
-      "actual_win_rate": 0.5061,
-      "edge_mean": 0.2391
+      "count": 191,
+      "market_wp_mean": 0.2965,
+      "model_wp_mean": 0.4938,
+      "actual_win_rate": 0.2827,
+      "edge_mean": 0.1973
     }
   ]
 }
