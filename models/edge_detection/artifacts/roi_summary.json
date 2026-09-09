@@ -1,0 +1,306 @@
+{
+  "seasons": [
+    2016,
+    2025
+  ],
+  "edge_thresh": 0.1,
+  "odds": -110,
+  "breakeven_wr": 0.5238,
+  "recommended_thresh": 0.15,
+  "overall": [
+    {
+      "week_group": "Early (wk 1\u20134)",
+      "n": 127,
+      "wins": 62,
+      "win_rate": 0.4882,
+      "roi": -0.068
+    },
+    {
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 230,
+      "wins": 117,
+      "win_rate": 0.5087,
+      "roi": -0.0289
+    },
+    {
+      "week_group": "Late  (wk 11+)",
+      "n": 361,
+      "wins": 186,
+      "win_rate": 0.5152,
+      "roi": -0.0164
+    }
+  ],
+  "by_season": [
+    {
+      "season": 2016,
+      "week_group": "Early (wk 1\u20134)",
+      "n": 5,
+      "wins": 2,
+      "win_rate": 0.4,
+      "roi": -0.2364
+    },
+    {
+      "season": 2016,
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 17,
+      "wins": 7,
+      "win_rate": 0.4118,
+      "roi": -0.2139
+    },
+    {
+      "season": 2016,
+      "week_group": "Late  (wk 11+)",
+      "n": 28,
+      "wins": 17,
+      "win_rate": 0.6071,
+      "roi": 0.1591
+    },
+    {
+      "season": 2017,
+      "week_group": "Early (wk 1\u20134)",
+      "n": 16,
+      "wins": 8,
+      "win_rate": 0.5,
+      "roi": -0.0455
+    },
+    {
+      "season": 2017,
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 23,
+      "wins": 14,
+      "win_rate": 0.6087,
+      "roi": 0.1621
+    },
+    {
+      "season": 2017,
+      "week_group": "Late  (wk 11+)",
+      "n": 35,
+      "wins": 22,
+      "win_rate": 0.6286,
+      "roi": 0.2
+    },
+    {
+      "season": 2018,
+      "week_group": "Early (wk 1\u20134)",
+      "n": 9,
+      "wins": 5,
+      "win_rate": 0.5556,
+      "roi": 0.0606
+    },
+    {
+      "season": 2018,
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 20,
+      "wins": 11,
+      "win_rate": 0.55,
+      "roi": 0.05
+    },
+    {
+      "season": 2018,
+      "week_group": "Late  (wk 11+)",
+      "n": 23,
+      "wins": 14,
+      "win_rate": 0.6087,
+      "roi": 0.1621
+    },
+    {
+      "season": 2019,
+      "week_group": "Early (wk 1\u20134)",
+      "n": 12,
+      "wins": 6,
+      "win_rate": 0.5,
+      "roi": -0.0455
+    },
+    {
+      "season": 2019,
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 20,
+      "wins": 14,
+      "win_rate": 0.7,
+      "roi": 0.3364
+    },
+    {
+      "season": 2019,
+      "week_group": "Late  (wk 11+)",
+      "n": 37,
+      "wins": 19,
+      "win_rate": 0.5135,
+      "roi": -0.0197
+    },
+    {
+      "season": 2020,
+      "week_group": "Early (wk 1\u20134)",
+      "n": 12,
+      "wins": 6,
+      "win_rate": 0.5,
+      "roi": -0.0455
+    },
+    {
+      "season": 2020,
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 26,
+      "wins": 14,
+      "win_rate": 0.5385,
+      "roi": 0.028
+    },
+    {
+      "season": 2020,
+      "week_group": "Late  (wk 11+)",
+      "n": 44,
+      "wins": 14,
+      "win_rate": 0.3182,
+      "roi": -0.3926
+    },
+    {
+      "season": 2021,
+      "week_group": "Early (wk 1\u20134)",
+      "n": 14,
+      "wins": 7,
+      "win_rate": 0.5,
+      "roi": -0.0455
+    },
+    {
+      "season": 2021,
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 27,
+      "wins": 13,
+      "win_rate": 0.4815,
+      "roi": -0.0808
+    },
+    {
+      "season": 2021,
+      "week_group": "Late  (wk 11+)",
+      "n": 40,
+      "wins": 20,
+      "win_rate": 0.5,
+      "roi": -0.0455
+    },
+    {
+      "season": 2022,
+      "week_group": "Early (wk 1\u20134)",
+      "n": 20,
+      "wins": 10,
+      "win_rate": 0.5,
+      "roi": -0.0455
+    },
+    {
+      "season": 2022,
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 23,
+      "wins": 9,
+      "win_rate": 0.3913,
+      "roi": -0.253
+    },
+    {
+      "season": 2022,
+      "week_group": "Late  (wk 11+)",
+      "n": 34,
+      "wins": 17,
+      "win_rate": 0.5,
+      "roi": -0.0455
+    },
+    {
+      "season": 2023,
+      "week_group": "Early (wk 1\u20134)",
+      "n": 16,
+      "wins": 8,
+      "win_rate": 0.5,
+      "roi": -0.0455
+    },
+    {
+      "season": 2023,
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 20,
+      "wins": 11,
+      "win_rate": 0.55,
+      "roi": 0.05
+    },
+    {
+      "season": 2023,
+      "week_group": "Late  (wk 11+)",
+      "n": 33,
+      "wins": 14,
+      "win_rate": 0.4242,
+      "roi": -0.1901
+    },
+    {
+      "season": 2024,
+      "week_group": "Early (wk 1\u20134)",
+      "n": 10,
+      "wins": 5,
+      "win_rate": 0.5,
+      "roi": -0.0455
+    },
+    {
+      "season": 2024,
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 29,
+      "wins": 15,
+      "win_rate": 0.5172,
+      "roi": -0.0125
+    },
+    {
+      "season": 2024,
+      "week_group": "Late  (wk 11+)",
+      "n": 41,
+      "wins": 19,
+      "win_rate": 0.4634,
+      "roi": -0.1153
+    },
+    {
+      "season": 2025,
+      "week_group": "Early (wk 1\u20134)",
+      "n": 13,
+      "wins": 5,
+      "win_rate": 0.3846,
+      "roi": -0.2657
+    },
+    {
+      "season": 2025,
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 25,
+      "wins": 9,
+      "win_rate": 0.36,
+      "roi": -0.3127
+    },
+    {
+      "season": 2025,
+      "week_group": "Late  (wk 11+)",
+      "n": 46,
+      "wins": 30,
+      "win_rate": 0.6522,
+      "roi": 0.2451
+    }
+  ],
+  "threshold_sensitivity": [
+    {
+      "edge_threshold": 0.1,
+      "n": 361,
+      "wins": 186,
+      "win_rate": 0.5152,
+      "roi": -0.0164
+    },
+    {
+      "edge_threshold": 0.15,
+      "n": 267,
+      "wins": 150,
+      "win_rate": 0.5618,
+      "roi": 0.0725
+    },
+    {
+      "edge_threshold": 0.2,
+      "n": 195,
+      "wins": 114,
+      "win_rate": 0.5846,
+      "roi": 0.1161
+    },
+    {
+      "edge_threshold": 0.25,
+      "n": 139,
+      "wins": 89,
+      "win_rate": 0.6403,
+      "roi": 0.2224
+    }
+  ],
+  "final_pnl": -2330.0
+}
