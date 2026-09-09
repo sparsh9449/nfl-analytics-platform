@@ -1,0 +1,188 @@
+{
+  "seasons": [
+    2024,
+    2025
+  ],
+  "n_games": 570,
+  "full_breakdown": [
+    {
+      "week_group": "Early (wk 1\u20134)",
+      "bucket": "< -10%",
+      "n": 53,
+      "market_wp": 0.7028,
+      "model_wp": 0.4773,
+      "actual_wr": 0.4717,
+      "edge_mean": -0.2255,
+      "pct_null_roll": 0.3208
+    },
+    {
+      "week_group": "Early (wk 1\u20134)",
+      "bucket": "-10% to -5%",
+      "n": 9,
+      "market_wp": 0.569,
+      "model_wp": 0.4963,
+      "actual_wr": 0.6667,
+      "edge_mean": -0.0727,
+      "pct_null_roll": 0.3333
+    },
+    {
+      "week_group": "Early (wk 1\u20134)",
+      "bucket": "-5% to +5%",
+      "n": 28,
+      "market_wp": 0.5164,
+      "model_wp": 0.5119,
+      "actual_wr": 0.4643,
+      "edge_mean": -0.0045,
+      "pct_null_roll": 0.1786
+    },
+    {
+      "week_group": "Early (wk 1\u20134)",
+      "bucket": "+5% to +10%",
+      "n": 15,
+      "market_wp": 0.4425,
+      "model_wp": 0.511,
+      "actual_wr": 0.2,
+      "edge_mean": 0.0684,
+      "pct_null_roll": 0.3333
+    },
+    {
+      "week_group": "Early (wk 1\u20134)",
+      "bucket": "> +10%",
+      "n": 23,
+      "market_wp": 0.329,
+      "model_wp": 0.5603,
+      "actual_wr": 0.4348,
+      "edge_mean": 0.2313,
+      "pct_null_roll": 0.087
+    },
+    {
+      "week_group": "Mid   (wk 5\u201310)",
+      "bucket": "< -10%",
+      "n": 59,
+      "market_wp": 0.7163,
+      "model_wp": 0.4743,
+      "actual_wr": 0.5254,
+      "edge_mean": -0.242,
+      "pct_null_roll": 0.0
+    },
+    {
+      "week_group": "Mid   (wk 5\u201310)",
+      "bucket": "-10% to -5%",
+      "n": 14,
+      "market_wp": 0.5948,
+      "model_wp": 0.5197,
+      "actual_wr": 0.5,
+      "edge_mean": -0.075,
+      "pct_null_roll": 0.0
+    },
+    {
+      "week_group": "Mid   (wk 5\u201310)",
+      "bucket": "-5% to +5%",
+      "n": 35,
+      "market_wp": 0.5346,
+      "model_wp": 0.5371,
+      "actual_wr": 0.5429,
+      "edge_mean": 0.0025,
+      "pct_null_roll": 0.0
+    },
+    {
+      "week_group": "Mid   (wk 5\u201310)",
+      "bucket": "+5% to +10%",
+      "n": 11,
+      "market_wp": 0.4248,
+      "model_wp": 0.4939,
+      "actual_wr": 0.6364,
+      "edge_mean": 0.0691,
+      "pct_null_roll": 0.0
+    },
+    {
+      "week_group": "Mid   (wk 5\u201310)",
+      "bucket": "> +10%",
+      "n": 54,
+      "market_wp": 0.341,
+      "model_wp": 0.57,
+      "actual_wr": 0.4444,
+      "edge_mean": 0.229,
+      "pct_null_roll": 0.0
+    },
+    {
+      "week_group": "Late  (wk 11+)",
+      "bucket": "< -10%",
+      "n": 103,
+      "market_wp": 0.7374,
+      "model_wp": 0.4755,
+      "actual_wr": 0.4757,
+      "edge_mean": -0.2618,
+      "pct_null_roll": 0.0
+    },
+    {
+      "week_group": "Late  (wk 11+)",
+      "bucket": "-10% to -5%",
+      "n": 17,
+      "market_wp": 0.6177,
+      "model_wp": 0.5422,
+      "actual_wr": 0.6471,
+      "edge_mean": -0.0755,
+      "pct_null_roll": 0.0
+    },
+    {
+      "week_group": "Late  (wk 11+)",
+      "bucket": "-5% to +5%",
+      "n": 45,
+      "market_wp": 0.5417,
+      "model_wp": 0.5402,
+      "actual_wr": 0.4222,
+      "edge_mean": -0.0015,
+      "pct_null_roll": 0.0
+    },
+    {
+      "week_group": "Late  (wk 11+)",
+      "bucket": "+5% to +10%",
+      "n": 17,
+      "market_wp": 0.4363,
+      "model_wp": 0.5105,
+      "actual_wr": 0.5294,
+      "edge_mean": 0.0742,
+      "pct_null_roll": 0.0
+    },
+    {
+      "week_group": "Late  (wk 11+)",
+      "bucket": "> +10%",
+      "n": 87,
+      "market_wp": 0.3148,
+      "model_wp": 0.5622,
+      "actual_wr": 0.5632,
+      "edge_mean": 0.2473,
+      "pct_null_roll": 0.0
+    }
+  ],
+  "pos_edge_gt10_by_week_group": [
+    {
+      "week_group": "Early (wk 1\u20134)",
+      "n": 23,
+      "market_wp": 0.329,
+      "model_wp": 0.5603,
+      "actual_wr": 0.4348,
+      "edge_mean": 0.2313,
+      "pct_null_roll": 0.087
+    },
+    {
+      "week_group": "Mid   (wk 5\u201310)",
+      "n": 54,
+      "market_wp": 0.341,
+      "model_wp": 0.57,
+      "actual_wr": 0.4444,
+      "edge_mean": 0.229,
+      "pct_null_roll": 0.0
+    },
+    {
+      "week_group": "Late  (wk 11+)",
+      "n": 87,
+      "market_wp": 0.3148,
+      "model_wp": 0.5622,
+      "actual_wr": 0.5632,
+      "edge_mean": 0.2473,
+      "pct_null_roll": 0.0
+    }
+  ]
+}
