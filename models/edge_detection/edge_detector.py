@@ -71,12 +71,12 @@ def _first_play_per_game(df: pd.DataFrame) -> pd.DataFrame:
 
 def _market_wp_posteam(df: pd.DataFrame) -> np.ndarray:
     """
-    Convert vegas_wp (home-team WP) to the possessing team's perspective.
-    Possession team == home team  →  market_wp = vegas_wp
-    Possession team == away team  →  market_wp = 1 - vegas_wp
+    Market-implied win probability for the possessing team.
+    nflfastR's vegas_wp is already the possessing team's WP (verified
+    empirically: corr with spread-implied home WP is +0.99 when posteam
+    is home and -0.99 when posteam is away).
     """
-    is_home = (df["posteam"] == df["home_team"]).to_numpy()
-    return np.where(is_home, df["vegas_wp"].to_numpy(), 1.0 - df["vegas_wp"].to_numpy())
+    return df["vegas_wp"].to_numpy()
 
 
 # ---------------------------------------------------------------------------
@@ -175,7 +175,7 @@ def _plot(summary: list[dict]) -> None:
 
     ax.set_xlabel("Edge bucket  (model WP − market WP)")
     ax.set_ylabel("Win rate")
-    ax.set_title("Pre-game Edge Backtest — XGBoost (calibrated) vs Market (2024–2025)")
+    ax.set_title("Pre-game Edge Backtest — XGBoost vs Market, posteam perspective (2024-2025)")
     ax.set_xticks(x)
     ax.set_xticklabels(labels, fontsize=9)
     ax.axhline(0.5, color="gray", linestyle="--", linewidth=0.8, alpha=0.6)
