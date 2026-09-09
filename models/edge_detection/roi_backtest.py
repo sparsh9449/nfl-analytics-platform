@@ -145,7 +145,6 @@ def _print_threshold_table(rows: list[dict]) -> None:
         roi_str = f"{r['roi']:+.1%}" if r["roi"] is not None else "n/a"
         print(f"> {r['edge_threshold']:.0%}       {r['n']:>5} {r['win_rate']:>9.1%} {roi_str:>8}  {profitable:>12}")
     print(f"\n  Break-even win rate at -110: 52.4%")
-    print(f"  Recommended threshold: >15% (n=267, ROI +7.3% over 9 seasons)")
 
 
 def _print_overall(rows: list[dict]) -> None:
