@@ -217,7 +217,13 @@ def _build_features(games: pd.DataFrame, roll_stats: pd.DataFrame) -> pd.DataFra
         }
         rows.append(row)
 
-    return pd.DataFrame(rows)
+    fp = pd.DataFrame(rows)
+    # Ensure all model feature columns are numeric so XGBoost accepts them.
+    # dict-built DataFrames have object dtype when any value is None.
+    for col in FEATURES:
+        if col in fp.columns:
+            fp[col] = pd.to_numeric(fp[col], errors="coerce")
+    return fp
 
 
 # ---------------------------------------------------------------------------
