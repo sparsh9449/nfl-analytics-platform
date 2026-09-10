@@ -1,284 +1,68 @@
 {
   "logistic_regression": {
     "val_2023": {
-      "roc_auc": 0.8351,
-      "brier": 0.1658,
-      "calibration": [
-        {
-          "predicted": 0.045,
-          "actual": 0.048,
-          "diff": 0.003
-        },
-        {
-          "predicted": 0.15,
-          "actual": 0.157,
-          "diff": 0.007
-        },
-        {
-          "predicted": 0.25,
-          "actual": 0.28,
-          "diff": 0.03
-        },
-        {
-          "predicted": 0.35,
-          "actual": 0.377,
-          "diff": 0.027
-        },
-        {
-          "predicted": 0.45,
-          "actual": 0.441,
-          "diff": -0.009
-        },
-        {
-          "predicted": 0.551,
-          "actual": 0.537,
-          "diff": -0.014
-        },
-        {
-          "predicted": 0.649,
-          "actual": 0.628,
-          "diff": -0.022
-        },
-        {
-          "predicted": 0.749,
-          "actual": 0.723,
-          "diff": -0.027
-        },
-        {
-          "predicted": 0.85,
-          "actual": 0.843,
-          "diff": -0.007
-        },
-        {
-          "predicted": 0.955,
-          "actual": 0.948,
-          "diff": -0.007
-        }
-      ]
-    },
-    "test_2024_2025": {
-      "roc_auc": 0.8439,
-      "brier": 0.1612,
-      "calibration": [
-        {
-          "predicted": 0.044,
-          "actual": 0.041,
-          "diff": -0.003
-        },
-        {
-          "predicted": 0.151,
-          "actual": 0.15,
-          "diff": -0.001
-        },
-        {
-          "predicted": 0.251,
-          "actual": 0.246,
-          "diff": -0.004
-        },
-        {
-          "predicted": 0.35,
-          "actual": 0.346,
-          "diff": -0.005
-        },
-        {
-          "predicted": 0.451,
-          "actual": 0.446,
-          "diff": -0.005
-        },
-        {
-          "predicted": 0.55,
-          "actual": 0.552,
-          "diff": 0.002
-        },
-        {
-          "predicted": 0.649,
-          "actual": 0.633,
-          "diff": -0.016
-        },
-        {
-          "predicted": 0.75,
-          "actual": 0.743,
-          "diff": -0.007
-        },
-        {
-          "predicted": 0.85,
-          "actual": 0.849,
-          "diff": -0.002
-        },
-        {
-          "predicted": 0.957,
-          "actual": 0.962,
-          "diff": 0.005
-        }
-      ]
+      "roc_auc": 0.8356,
+      "brier": 0.1655
     }
   },
   "xgboost": {
     "val_2023": {
-      "roc_auc": 0.8396,
-      "brier": 0.1636,
+      "roc_auc": 0.8402,
+      "brier": 0.1632
+    },
+    "test_2024_2025_calibrated": {
+      "roc_auc": 0.8443,
+      "brier": 0.1611,
       "calibration": [
         {
-          "predicted": 0.061,
-          "actual": 0.026,
-          "diff": -0.036
+          "predicted": 0.029,
+          "actual": 0.032,
+          "diff": 0.003
         },
         {
-          "predicted": 0.151,
-          "actual": 0.123,
-          "diff": -0.028
-        },
-        {
-          "predicted": 0.25,
-          "actual": 0.248,
-          "diff": -0.002
-        },
-        {
-          "predicted": 0.351,
-          "actual": 0.37,
-          "diff": 0.02
-        },
-        {
-          "predicted": 0.451,
-          "actual": 0.436,
-          "diff": -0.016
-        },
-        {
-          "predicted": 0.547,
-          "actual": 0.541,
-          "diff": -0.006
-        },
-        {
-          "predicted": 0.65,
-          "actual": 0.661,
+          "predicted": 0.13,
+          "actual": 0.14,
           "diff": 0.011
         },
         {
-          "predicted": 0.749,
-          "actual": 0.739,
-          "diff": -0.01
-        },
-        {
-          "predicted": 0.851,
-          "actual": 0.864,
-          "diff": 0.013
-        },
-        {
-          "predicted": 0.938,
-          "actual": 0.979,
-          "diff": 0.04
-        }
-      ]
-    },
-    "test_2024_2025": {
-      "roc_auc": 0.846,
-      "brier": 0.1604,
-      "calibration": [
-        {
-          "predicted": 0.057,
-          "actual": 0.025,
-          "diff": -0.032
-        },
-        {
-          "predicted": 0.15,
-          "actual": 0.114,
-          "diff": -0.036
-        },
-        {
-          "predicted": 0.251,
-          "actual": 0.228,
-          "diff": -0.023
-        },
-        {
-          "predicted": 0.351,
-          "actual": 0.361,
-          "diff": 0.01
-        },
-        {
-          "predicted": 0.452,
-          "actual": 0.433,
-          "diff": -0.019
-        },
-        {
-          "predicted": 0.547,
-          "actual": 0.57,
-          "diff": 0.023
-        },
-        {
-          "predicted": 0.65,
-          "actual": 0.633,
-          "diff": -0.017
-        },
-        {
-          "predicted": 0.75,
-          "actual": 0.751,
+          "predicted": 0.245,
+          "actual": 0.247,
           "diff": 0.002
         },
         {
-          "predicted": 0.85,
-          "actual": 0.891,
-          "diff": 0.041
+          "predicted": 0.383,
+          "actual": 0.358,
+          "diff": -0.024
         },
         {
-          "predicted": 0.941,
-          "actual": 0.975,
-          "diff": 0.034
-        }
-      ]
-    },
-    "test_2024_2025_calibrated": {
-      "roc_auc": 0.8457,
-      "brier": 0.1602,
-      "calibration": [
-        {
-          "predicted": 0.04,
-          "actual": 0.042,
-          "diff": 0.002
+          "predicted": 0.462,
+          "actual": 0.473,
+          "diff": 0.011
         },
         {
-          "predicted": 0.153,
-          "actual": 0.136,
-          "diff": -0.017
+          "predicted": 0.564,
+          "actual": 0.568,
+          "diff": 0.005
         },
         {
-          "predicted": 0.243,
-          "actual": 0.223,
-          "diff": -0.019
+          "predicted": 0.666,
+          "actual": 0.653,
+          "diff": -0.013
         },
         {
-          "predicted": 0.359,
-          "actual": 0.347,
-          "diff": -0.011
+          "predicted": 0.738,
+          "actual": 0.759,
+          "diff": 0.02
         },
         {
-          "predicted": 0.437,
-          "actual": 0.444,
-          "diff": 0.007
+          "predicted": 0.844,
+          "actual": 0.874,
+          "diff": 0.029
         },
         {
-          "predicted": 0.563,
-          "actual": 0.579,
-          "diff": 0.016
-        },
-        {
-          "predicted": 0.642,
-          "actual": 0.62,
-          "diff": -0.022
-        },
-        {
-          "predicted": 0.73,
-          "actual": 0.728,
-          "diff": -0.002
-        },
-        {
-          "predicted": 0.843,
-          "actual": 0.873,
-          "diff": 0.03
-        },
-        {
-          "predicted": 0.97,
-          "actual": 0.968,
-          "diff": -0.002
+          "predicted": 0.98,
+          "actual": 0.967,
+          "diff": -0.013
         }
       ]
     }
