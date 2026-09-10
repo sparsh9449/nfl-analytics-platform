@@ -217,6 +217,9 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 
+# Frontend — lib/ rule above is Python-only, allow frontend/lib
+!frontend/lib/
+
 # NFL Analytics — generated data files (recreate by running the pipeline)
 *.parquet
 data/quality_log/
