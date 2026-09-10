@@ -32,6 +32,7 @@ import numpy as np
 from sklearn.calibration import calibration_curve
 from sklearn.isotonic import IsotonicRegression
 from sklearn.metrics import brier_score_loss, roc_auc_score
+from models.win_probability.calibrated_model import IsotonicCalibratedXGB
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
@@ -42,23 +43,6 @@ from models.win_probability.train import drop_ties
 
 ARTIFACTS = ROOT / "models" / "win_probability" / "artifacts"
 
-
-class IsotonicCalibratedXGB:
-    """XGBoost + isotonic regression post-hoc calibration.
-
-    Wraps the raw XGBoost model so callers can call predict_proba() the same
-    way as the uncalibrated model. The isotonic layer maps raw scores to
-    calibrated probabilities using a monotone step function fit on the val set.
-    """
-
-    def __init__(self, base_model, isotonic: IsotonicRegression):
-        self.base_model = base_model
-        self.isotonic   = isotonic
-
-    def predict_proba(self, X) -> np.ndarray:
-        raw = self.base_model.predict_proba(X)[:, 1]
-        cal = self.isotonic.transform(raw)
-        return np.column_stack([1.0 - cal, cal])
 
 
 def _load_splits():

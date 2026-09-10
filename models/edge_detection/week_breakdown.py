@@ -45,7 +45,7 @@ from models.edge_detection.edge_detector import (
     EDGE_LABELS,
     TEST_SEASONS,
 )
-from models.win_probability.calibrate import IsotonicCalibratedXGB  # noqa: F401
+from models.win_probability.calibrated_model import IsotonicCalibratedXGB  # noqa: F401
 
 WEEK_GROUPS = [
     ("Early (wk 1–4)",  (1,  4)),

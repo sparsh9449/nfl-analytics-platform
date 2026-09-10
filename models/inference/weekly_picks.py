@@ -40,7 +40,7 @@ from scipy.stats import norm
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from models.win_probability.calibrate import IsotonicCalibratedXGB  # noqa: F401
+from models.win_probability.calibrated_model import IsotonicCalibratedXGB  # noqa: F401
 from models.win_probability.data_prep import FEATURES
 
 SILVER_DIR = ROOT / "data" / "silver"
@@ -55,6 +55,9 @@ BREAKEVEN_WR       = 0.5238   # at -110 odds
 NFL_SPREAD_SIGMA   = 13.86    # std dev of NFL point differentials
 
 # Fixed pre-game game-state values (same for every game)
+# Fixed pre-game game-state values.
+# is_home = 1 always because inference always uses home team as posteam.
+# week is added dynamically per game in _build_features.
 PREGAME_STATE = {
     "score_differential":        0,
     "game_seconds_remaining":    3600,
@@ -63,6 +66,7 @@ PREGAME_STATE = {
     "ydstogo":                   10,
     "posteam_timeouts_remaining": 3,
     "defteam_timeouts_remaining": 3,
+    "is_home":                   1,
 }
 
 
@@ -72,57 +76,61 @@ PREGAME_STATE = {
 
 def _compute_rolling_stats(season: int, before_week: int) -> pd.DataFrame:
     """
-    Return a DataFrame indexed by (game_id, team) with rolling ROLL_N-game
-    averages of points scored and allowed, using only games from weeks
-    strictly before `before_week` in `season`.
-
-    Mirrors the logic in silver_to_gold.py but scoped to one season and
-    one look-ahead cutoff.
+    Rolling ROLL_N-game averages of points and EPA for each team,
+    using only games from weeks strictly before `before_week` in `season`.
+    Also computes rest_days (days since each team's previous game).
     """
     path = SILVER_DIR / f"pbp_{season}.parquet"
     if not path.exists():
         raise FileNotFoundError(f"Silver data not found: {path}")
 
-    cols = ["game_id", "season", "week", "home_team", "away_team",
-            "total_home_score", "total_away_score"]
+    cols = ["game_id", "week", "home_team", "away_team", "game_date",
+            "total_home_score", "total_away_score",
+            "total_home_epa", "total_away_epa"]
     df = pd.read_parquet(path, columns=cols)
 
-    # Game-level final scores from weeks before the target
     prior = df[df["week"] < before_week]
-    game_scores = (
-        prior.groupby("game_id")
-        .agg(
-            season    =("season",           "first"),
-            week      =("week",             "first"),
-            home_team =("home_team",        "first"),
-            away_team =("away_team",        "first"),
-            home_final=("total_home_score", "max"),
-            away_final=("total_away_score", "max"),
-        )
-        .reset_index()
-    )
-
-    if game_scores.empty:
+    if prior.empty:
         return pd.DataFrame(columns=["game_id", "team",
-                                     f"roll{ROLL_N}_pts_scored",
-                                     f"roll{ROLL_N}_pts_allowed"])
+                                     f"roll{ROLL_N}_pts_scored",  f"roll{ROLL_N}_pts_allowed",
+                                     f"roll{ROLL_N}_epa_scored",  f"roll{ROLL_N}_epa_allowed",
+                                     "rest_days"])
 
-    home = game_scores[["game_id", "week", "home_team", "home_final", "away_final"]].rename(
-        columns={"home_team": "team", "home_final": "pts_scored", "away_final": "pts_allowed"}
-    )
-    away = game_scores[["game_id", "week", "away_team", "away_final", "home_final"]].rename(
-        columns={"away_team": "team", "away_final": "pts_scored", "home_final": "pts_allowed"}
-    )
-    team_games = pd.concat([home, away]).sort_values(["team", "week"]).reset_index(drop=True)
+    gl = (prior.groupby("game_id")
+          .agg(week      =("week",             "first"),
+               home_team =("home_team",        "first"),
+               away_team =("away_team",        "first"),
+               game_date =("game_date",        "first"),
+               home_final=("total_home_score", "max"),
+               away_final=("total_away_score", "max"),
+               home_epa  =("total_home_epa",   "max"),
+               away_epa  =("total_away_epa",   "max"))
+          .reset_index())
 
-    for raw_col, roll_col in [("pts_scored",  f"roll{ROLL_N}_pts_scored"),
-                               ("pts_allowed", f"roll{ROLL_N}_pts_allowed")]:
-        team_games[roll_col] = (
-            team_games.groupby("team")[raw_col]
-            .transform(lambda s: s.shift(1).rolling(ROLL_N, min_periods=1).mean())
-        )
+    home = gl[["game_id","week","game_date","home_team","home_final","away_final","home_epa","away_epa"]].rename(
+        columns={"home_team":"team","home_final":"pts_scored","away_final":"pts_allowed",
+                 "home_epa":"epa_scored","away_epa":"epa_allowed"})
+    away = gl[["game_id","week","game_date","away_team","away_final","home_final","away_epa","home_epa"]].rename(
+        columns={"away_team":"team","away_final":"pts_scored","home_final":"pts_allowed",
+                 "away_epa":"epa_scored","home_epa":"epa_allowed"})
 
-    return team_games[["game_id", "team", f"roll{ROLL_N}_pts_scored", f"roll{ROLL_N}_pts_allowed"]]
+    tg = (pd.concat([home, away], ignore_index=True)
+          .sort_values(["team","week"]).reset_index(drop=True))
+
+    for raw, col in [("pts_scored",  f"roll{ROLL_N}_pts_scored"),
+                     ("pts_allowed", f"roll{ROLL_N}_pts_allowed"),
+                     ("epa_scored",  f"roll{ROLL_N}_epa_scored"),
+                     ("epa_allowed", f"roll{ROLL_N}_epa_allowed")]:
+        tg[col] = (tg.groupby("team")[raw]
+                   .transform(lambda s: s.shift(1).rolling(ROLL_N, min_periods=1).mean()))
+
+    tg["game_date"] = pd.to_datetime(tg["game_date"])
+    tg["rest_days"] = tg.groupby("team")["game_date"].transform(lambda s: s.diff().dt.days)
+
+    return tg[["game_id","team",
+               f"roll{ROLL_N}_pts_scored", f"roll{ROLL_N}_pts_allowed",
+               f"roll{ROLL_N}_epa_scored", f"roll{ROLL_N}_epa_allowed",
+               "rest_days"]]
 
 
 # ---------------------------------------------------------------------------
@@ -166,13 +174,18 @@ def _build_features(games: pd.DataFrame, roll_stats: pd.DataFrame) -> pd.DataFra
     # the stats each team carries into THIS game, not the prior game_id.
     # Use team-level lookup: take the rolling stats from the most recent
     # prior game for each team.
+    stat_cols = ["team",
+                 f"roll{ROLL_N}_pts_scored", f"roll{ROLL_N}_pts_allowed",
+                 f"roll{ROLL_N}_epa_scored", f"roll{ROLL_N}_epa_allowed",
+                 "rest_days"]
+    available = [c for c in stat_cols if c in roll_stats.columns]
     latest = (
         roll_stats
         .sort_values("game_id")
         .groupby("team")
         .last()
         .reset_index()
-        [["team", f"roll{ROLL_N}_pts_scored", f"roll{ROLL_N}_pts_allowed"]]
+        [available]
     )
     latest_dict = latest.set_index("team").to_dict("index")
 
@@ -183,14 +196,21 @@ def _build_features(games: pd.DataFrame, roll_stats: pd.DataFrame) -> pd.DataFra
 
         row = {
             **PREGAME_STATE,
+            "week": int(g["week"]),
             "posteam_roll4_pts_scored":  home_stats.get(f"roll{ROLL_N}_pts_scored"),
             "posteam_roll4_pts_allowed": home_stats.get(f"roll{ROLL_N}_pts_allowed"),
+            "posteam_roll4_epa_scored":  home_stats.get(f"roll{ROLL_N}_epa_scored"),
+            "posteam_roll4_epa_allowed": home_stats.get(f"roll{ROLL_N}_epa_allowed"),
+            "posteam_rest_days":         home_stats.get("rest_days"),
             "defteam_roll4_pts_scored":  away_stats.get(f"roll{ROLL_N}_pts_scored"),
             "defteam_roll4_pts_allowed": away_stats.get(f"roll{ROLL_N}_pts_allowed"),
+            "defteam_roll4_epa_scored":  away_stats.get(f"roll{ROLL_N}_epa_scored"),
+            "defteam_roll4_epa_allowed": away_stats.get(f"roll{ROLL_N}_epa_allowed"),
+            "defteam_rest_days":         away_stats.get("rest_days"),
             # metadata (not model features)
-            "game_id":    g["game_id"],
-            "home_team":  g["home_team"],
-            "away_team":  g["away_team"],
+            "game_id":     g["game_id"],
+            "home_team":   g["home_team"],
+            "away_team":   g["away_team"],
             "spread_line": g["spread_line"],
             "total_line":  g["total_line"],
             "vegas_wp":    g["vegas_wp"],

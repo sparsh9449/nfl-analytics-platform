@@ -25,7 +25,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from models.win_probability.calibrate import IsotonicCalibratedXGB  # noqa: F401
+from models.win_probability.calibrated_model import IsotonicCalibratedXGB  # noqa: F401
 from models.edge_detection.week_breakdown import _build_first_plays, WEEK_GROUPS
 from models.edge_detection.edge_detector import GOLD_PATH, XGB_PATH, ARTIFACTS, TEST_SEASONS
 

@@ -33,7 +33,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
 from models.win_probability.data_prep import FEATURES
-from models.win_probability.calibrate import IsotonicCalibratedXGB  # noqa: F401 — needed for joblib deserialization
+from models.win_probability.calibrated_model import IsotonicCalibratedXGB  # noqa: F401
 
 GOLD_PATH = ROOT / "data" / "gold" / "wp_features.parquet"
 # Default to calibrated model; fall back to raw if calibrated artifact is missing
