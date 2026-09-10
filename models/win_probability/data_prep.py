@@ -34,7 +34,7 @@ GOLD_PATH = ROOT / "data" / "gold" / "wp_features.parquet"
 # ---------------------------------------------------------------------------
 
 FEATURES = [
-    # Game state — the core inputs a human analyst would reach for
+    # Game state
     "score_differential",
     "game_seconds_remaining",
     "yardline_100",
@@ -42,11 +42,22 @@ FEATURES = [
     "ydstogo",
     "posteam_timeouts_remaining",
     "defteam_timeouts_remaining",
+    # Context
+    "is_home",
+    "week",
     # Rolling team performance — last-4-game averages entering this game
     "posteam_roll4_pts_scored",
     "posteam_roll4_pts_allowed",
     "defteam_roll4_pts_scored",
     "defteam_roll4_pts_allowed",
+    # Rolling EPA efficiency
+    "posteam_roll4_epa_scored",
+    "posteam_roll4_epa_allowed",
+    "defteam_roll4_epa_scored",
+    "defteam_roll4_epa_allowed",
+    # Rest
+    "posteam_rest_days",
+    "defteam_rest_days",
 ]
 
 TARGET = "posteam_win"   # 1.0 = posteam wins, 0.0 = loses, 0.5 = tie
