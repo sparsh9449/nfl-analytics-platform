@@ -1,0 +1,20 @@
+{
+  "splits": [
+    {
+      "split": "val/calibrated",
+      "auc": 0.6826,
+      "brier": 0.226,
+      "accuracy": 0.6246,
+      "model_pick_acc": 0.6246,
+      "market_pick_acc": 0.6737
+    },
+    {
+      "split": "test/calibrated",
+      "auc": 0.7272,
+      "brier": 0.2189,
+      "accuracy": 0.6626,
+      "model_pick_acc": 0.6626,
+      "market_pick_acc": 0.6819
+    }
+  ]
+}

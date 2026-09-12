@@ -58,6 +58,9 @@ FEATURES = [
     # Rest
     "posteam_rest_days",
     "defteam_rest_days",
+    # Pre-game market context — anchors in-game WP to pre-game expectations
+    "spread_line",
+    "total_line",
 ]
 
 TARGET = "posteam_win"   # 1.0 = posteam wins, 0.0 = loses, 0.5 = tie

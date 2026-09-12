@@ -7,62 +7,62 @@
   },
   "xgboost": {
     "val_2023": {
-      "roc_auc": 0.8402,
-      "brier": 0.1632
+      "roc_auc": 0.8464,
+      "brier": 0.1599
     },
     "test_2024_2025_calibrated": {
-      "roc_auc": 0.8443,
-      "brier": 0.1611,
+      "roc_auc": 0.8491,
+      "brier": 0.1584,
       "calibration": [
         {
-          "predicted": 0.029,
-          "actual": 0.032,
-          "diff": 0.003
+          "predicted": 0.046,
+          "actual": 0.056,
+          "diff": 0.01
         },
         {
-          "predicted": 0.13,
-          "actual": 0.14,
-          "diff": 0.011
+          "predicted": 0.193,
+          "actual": 0.175,
+          "diff": -0.018
         },
         {
-          "predicted": 0.245,
-          "actual": 0.247,
-          "diff": 0.002
+          "predicted": 0.251,
+          "actual": 0.26,
+          "diff": 0.009
         },
         {
-          "predicted": 0.383,
-          "actual": 0.358,
-          "diff": -0.024
+          "predicted": 0.352,
+          "actual": 0.326,
+          "diff": -0.026
         },
         {
-          "predicted": 0.462,
-          "actual": 0.473,
-          "diff": 0.011
+          "predicted": 0.446,
+          "actual": 0.46,
+          "diff": 0.013
         },
         {
-          "predicted": 0.564,
-          "actual": 0.568,
-          "diff": 0.005
+          "predicted": 0.542,
+          "actual": 0.557,
+          "diff": 0.016
         },
         {
-          "predicted": 0.666,
-          "actual": 0.653,
-          "diff": -0.013
+          "predicted": 0.677,
+          "actual": 0.673,
+          "diff": -0.004
         },
         {
-          "predicted": 0.738,
-          "actual": 0.759,
-          "diff": 0.02
+          "predicted": 0.753,
+          "actual": 0.785,
+          "diff": 0.032
         },
         {
-          "predicted": 0.844,
-          "actual": 0.874,
-          "diff": 0.029
+          "predicted": 0.852,
+          "actual": 0.865,
+          "diff": 0.013
         },
         {
-          "predicted": 0.98,
-          "actual": 0.967,
-          "diff": -0.013
+          "predicted": 0.975,
+          "actual": 0.969,
+          "diff": -0.006
         }
       ]
     }
