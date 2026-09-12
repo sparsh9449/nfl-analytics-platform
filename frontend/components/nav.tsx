@@ -5,33 +5,40 @@ import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
 
 const links = [
-  { href: '/picks', label: 'Weekly Picks' },
-  { href: '/performance', label: 'Model Performance' },
-  { href: '/edge', label: 'Edge Analysis' },
-  { href: '/history', label: 'History' },
+  { href: '/', label: 'Home' },
+  { href: '/games', label: 'Games' },
+  { href: '/fantasy', label: 'Fantasy' },
+  { href: '/picks', label: 'Picks' },
+  { href: '/stats', label: 'Stats' },
+  { href: '/model', label: 'Model' },
 ]
 
 export default function Nav() {
   const pathname = usePathname()
   return (
-    <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-10">
-      <div className="max-w-6xl mx-auto px-4 h-14 flex items-center gap-8">
-        <span className="font-semibold text-sm tracking-tight shrink-0">NFL Analytics</span>
-        <nav className="flex items-center gap-6 overflow-x-auto">
-          {links.map(({ href, label }) => (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                'text-sm whitespace-nowrap transition-colors',
-                pathname === href
-                  ? 'text-foreground font-medium'
-                  : 'text-muted-foreground hover:text-foreground'
-              )}
-            >
-              {label}
-            </Link>
-          ))}
+    <header className="sticky top-0 z-50 border-b border-border bg-[#080d14]/95 backdrop-blur">
+      <div className="max-w-7xl mx-auto px-4 h-14 flex items-center gap-8">
+        <Link href="/" className="flex items-center gap-2 shrink-0">
+          <span className="text-primary font-black text-lg tracking-tight">GRIDIRON</span>
+        </Link>
+        <nav className="flex items-center gap-1 overflow-x-auto">
+          {links.map(({ href, label }) => {
+            const active = href === '/' ? pathname === '/' : pathname.startsWith(href)
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={cn(
+                  'px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap transition-colors',
+                  active
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-muted-foreground hover:text-foreground hover:bg-white/5'
+                )}
+              >
+                {label}
+              </Link>
+            )
+          })}
         </nav>
       </div>
     </header>

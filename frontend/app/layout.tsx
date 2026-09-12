@@ -7,16 +7,16 @@ const geistSans = Geist({ variable: '--font-geist-sans', subsets: ['latin'] })
 const geistMono = Geist_Mono({ variable: '--font-geist-mono', subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'NFL Analytics',
-  description: 'Win probability model and pre-game edge detection',
+  title: 'Gridiron — NFL Analytics',
+  description: 'Fantasy advice, betting picks, and NFL stats',
 }
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-background text-foreground">
+    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} dark`}>
+      <body className="min-h-screen bg-background text-foreground antialiased">
         <Nav />
-        <main className="flex-1">{children}</main>
+        <main>{children}</main>
       </body>
     </html>
   )
