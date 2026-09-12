@@ -26,6 +26,32 @@ export interface GamePick {
   week: number
 }
 
+export interface PreGamePick {
+  game_id: string
+  name: string
+  date: string
+  home_team: string
+  away_team: string
+  spread_line: number | null
+  total_line: number | null
+  market_wp: number
+  model_wp: number
+  home_edge: number  // signed (home perspective); positive = model likes home more than market
+  edge: number       // always positive: pick team's advantage over market
+  pick_team: string
+  pick_side: 'home' | 'away'
+  confidence: 'HIGH' | 'MEDIUM' | 'LOW'
+  home_stats: Record<string, number | null>
+  away_stats: Record<string, number | null>
+}
+
+export interface UpcomingPicksResponse {
+  n_games: number
+  model: string
+  warmup_season: number
+  picks: PreGamePick[]
+}
+
 export interface GamesResponse {
   season: number
   week: number
@@ -163,4 +189,8 @@ export const api = {
   weekBreakdown: () => get<WeekBreakdownResponse>('/model/week-breakdown'),
   roi: () => get<RoiResponse>('/model/roi'),
   seasonAccuracy: () => get<{ seasons: SeasonAccuracyEntry[] }>('/model/season-accuracy'),
+  upcomingPicks: (week?: number) => {
+    const qs = week != null ? `?week=${week}` : ''
+    return get<UpcomingPicksResponse>(`/picks/upcoming${qs}`)
+  },
 }
