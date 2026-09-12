@@ -40,6 +40,7 @@ from models.inference.weekly_picks import (
     NFL_SPREAD_SIGMA,
 )
 from models.win_probability.data_prep import FEATURES
+from models.pregame.inference import get_picks as _get_pregame_picks
 
 # ---------------------------------------------------------------------------
 # Startup: load artifacts once into module-level variables
@@ -252,6 +253,27 @@ def get_week_breakdown():
 def get_roi():
     """Flat-bet ROI analysis by season and edge threshold."""
     return _roi_sum
+
+
+@app.get("/picks/upcoming")
+def get_upcoming_picks(week: Optional[int] = None):
+    """
+    Pre-game picks for this week's scheduled NFL games.
+    Uses the pre-game XGBoost model (trained on game-level data 2016–2025)
+    with 2025 season rolling stats as the warm-start for team form.
+    Spreads are sourced live from ESPN/DraftKings.
+    """
+    try:
+        picks = _get_pregame_picks(week=week)
+    except Exception as e:
+        raise HTTPException(500, f"Pre-game picks error: {e}")
+
+    return {
+        "n_games": len(picks),
+        "model": "pregame_xgb_calibrated",
+        "warmup_season": 2025,
+        "picks": picks,
+    }
 
 
 @app.get("/model/season-accuracy")
